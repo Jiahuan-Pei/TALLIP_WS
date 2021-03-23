@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("input[name='mode'][value='{{mode}}']").attr("checked",true);
+        });
+    </script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+	<div class="form_content">
+        <h2 align="center">中文词汇相似度计算研究</h2>
+        <form id="test" action="/WordSim" method="post">
+            {% csrf_token %}
+            <div id="container">
+                <div class="box1">
+                    <fieldset>
+                        <legend>Step1: 输入想要计算的词对</legend>
+                        <div class="form-row">
+                            <div><label for="field3">请在下方文本框内输入，一行一对词语，用空格间隔，输入可多行，例如：<br/>
+                                恶劣 坏<br/>
+                                服气 口服心服<br/>
+                                拖后腿 拉后腿<br/>
+                                书籍 图书馆<br/>
+                                利润 成本<br/>
+                                互联网 因特网<br/>
+                                计算机 电脑
+
+                            </label></div>
+                            <div class="field-widget"><textarea class="required" name="content">{{ rlt }}</textarea></div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Step2: 选择计算模式</legend>
+                        <label class="left"> <input name="mode" type="radio" class="radio_input" value="cilin3" checked/> 同义词林 </label>
+                        <label class="left"><input name="mode"  type="radio" class="radio_input" id="hownet" value="hownet" /> 知网HowNet </label>
+                        <label class="left"><input name="mode"  type="radio" class="radio_input" value="wordnet" /> 中文wordnet </label>
+                        <label class="left"><input name="mode"  type="radio" class="radio_input" value="word2vec" /> word2vec </label>
+                        <label class="left"><input name="mode"  type="radio" class="radio_input" value="ir" /> ir </label>
+                        <label class="left"><input name="mode"  type="radio" class="radio_input" value="linear" /> 线性组合 </label>
+                        <label class="left"><input name="mode"  type="radio" class="radio_input" value="counter" /> Counter-fitting </label>
+                    </fieldset>
+                    <div align="center"><input type="submit" class="submit" value="开始计算" /></div><hr />
+                </div>
+                <div class="box2">
+                    <fieldset>
+                    <legend>Step3:计算结果</legend>
+                    <p>计算模式：{{ mode }}</p>
+                    输入：<br />
+                    <pre>{{ rlt }}</pre>
+                    输出：<br />
+                    <pre>{{ result }}</pre>
+                </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
